@@ -1,13 +1,14 @@
 # MineTutor
 
-MineTutor is a gameplay guide plugin for Minecraft multiplayer servers. It allows players to get real-time answers to any gameplay-related questions—such as crafting recipes, mob strategies, or resource locations—simply by asking in the chat. The plugin leverages OpenAI's LLM technology to provide a natural and accurate guide experience.
+MineTutor is a gameplay guide plugin for Minecraft multiplayer servers. It allows players to get real-time answers to any gameplay-related questions—such as crafting recipes, mob strategies, or resource locations—simply by asking in the chat. The plugin leverages LLM technology to provide a natural and accurate guide experience.
 
 ## Features
 
+- **Multi-AI Support:** Choose your preferred AI provider (currently supports OpenAI).
 - **AI-Powered Q&A:** Get answers to your Minecraft questions directly in-game.
 - **Asynchronous API Handling:** Prevents server lag by handling API requests off the main thread.
 - **Command Cooldown:** Prevents API spam and controls costs with a configurable per-player cooldown.
-- **Fully Configurable:** Customize everything from the API key and AI personality to cooldown times and user-facing messages.
+- **Fully Configurable:** Customize everything from the API provider, API key, and AI personality to cooldown times and user-facing messages.
 - **Command Aliases:** Use `/guide`, `/ask`, or `/가이드`.
 - **Reload Command:** Admins can reload the configuration without a full server restart.
 
@@ -28,9 +29,13 @@ After the first run, a `config.yml` file will be created in `plugins/MineTutor/`
 ```yaml
 # MineTutor Configuration
 
-# OpenAI API Key
-# Get your API key from https://platform.openai.com/account/api-keys
-api-key: "YOUR_OPENAI_API_KEY"
+# AI Provider
+# Specifies which AI provider to use. Currently, only "openai" is supported.
+ai-provider: openai
+
+# API Key
+# Get your API key from the respective provider's website (e.g., https://platform.openai.com/account/api-keys)
+api-key: "YOUR_API_KEY"
 
 # The system prompt helps set the behavior of the assistant.
 # You can modify this to change how MineTutor responds.
@@ -48,7 +53,8 @@ messages:
   usage: "§cUsage: /guide <question>"
 ```
 
--   **`api-key` (Required):** This is the most important setting. You **must** replace `"YOUR_OPENAI_API_KEY"` with your actual OpenAI API key for the plugin to function.
+-   **`ai-provider`:** Determines which AI service to use. For now, only `openai` is available.
+-   **`api-key` (Required):** This is the most important setting. You **must** replace `"YOUR_API_KEY"` with your actual API key from the chosen provider for the plugin to function.
 -   **`system-prompt`:** This text defines the personality and instructions for the AI. You can customize it to change how it behaves.
 -   **`command-cooldown`:** The time in seconds a player must wait before using the command again.
 -   **`messages`:** Customize all messages shown to players. The `{time}` placeholder can be used in the cooldown message.
@@ -83,9 +89,13 @@ messages:
 ```yaml
 # MineTutor 설정
 
-# OpenAI API 키
-# API 키는 https://platform.openai.com/account/api-keys ��서 발급받을 수 있습니다.
-api-key: "YOUR_OPENAI_API_KEY"
+# AI 공급자
+# 어떤 AI 공급자를 사용할지 지정합니다. 현재는 "openai"만 지원됩니다.
+ai-provider: openai
+
+# API 키
+# 사용 중인 AI 공급자의 웹사이트에서 API 키를 발급받으세요. (예: https://platform.openai.com/account/api-keys)
+api-key: "YOUR_API_KEY"
 
 # 시스템 프롬프트는 AI의 행동을 설정하는 데 도움을 줍니다.
 # MineTutor가 응답하는 방식을 변경하려면 이 부분을 수정하세요.
@@ -103,9 +113,10 @@ messages:
   usage: "§c사용법: /guide <질문>"
 ```
 
--   **`api-key` (필수):** 가장 중요한 설정입니다. 플러그인이 작동하려면 **반드시** `"YOUR_OPENAI_API_KEY"` 부분을 실제 OpenAI API 키로 교체해야 합니다.
+-   **`ai-provider`:** 어떤 AI 서비스를 사용할지 결정합니다. 지금은 `openai`만 사용할 수 있습니다.
+-   **`api-key` (필수):** 가장 중요한 설정입니다. 플러그인이 작동하려면 **반드시** `"YOUR_API_KEY"` 부분을 실제 AI 공급자의 API 키로 교체해야 합니다.
 -   **`system-prompt`:** AI의 성격과 지침을 정의하는 텍스트입니다. AI의 행동 방식을 바꾸고 싶다면 이 부분을 수정할 수 있습니다.
--   **`command-cooldown`:** 플레이어가 명령어를 재사용하기까��� 기다려야 하는 시간(초)입니다.
+-   **`command-cooldown`:** 플레이어가 명령어를 재사용하기까지 기다려야 하는 시간(초)입니다.
 -   **`messages`:** 플레이어에게 보여지는 모든 메시지를 수정할 수 있습니다. 쿨다운 메시지에서는 `{time}` 변수를 사용할 수 있습니다.
 
 ### 3. 명령어 및 권한
