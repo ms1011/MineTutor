@@ -14,6 +14,7 @@ public class GuideCommand implements CommandExecutor {
 
     private final MineTutor plugin;
     private final AIProvider aiProvider;
+    private final Map<UUID, Long> cooldowns = new HashMap<>();
 
     public GuideCommand(MineTutor plugin, AIProvider aiProvider) {
         this.plugin = plugin;
