@@ -8,3 +8,4 @@ commands:
   guide:
     description: Ask a question to MineTutor.
     usage: /<command> <question>
+    aliases: [ask, 가이드]
