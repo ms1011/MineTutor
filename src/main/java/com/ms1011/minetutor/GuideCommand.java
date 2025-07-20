@@ -23,6 +23,17 @@ public class GuideCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
+            if (!sender.hasPermission("minetutor.admin")) {
+                String noPermMessage = plugin.getConfig().getString("messages.no-permission", "§cYou do not have permission to use this command.");
+                sender.sendMessage(noPermMessage);
+                return true;
+            }
+            plugin.reload();
+            sender.sendMessage("§aMineTutor configuration reloaded.");
+            return true;
+        }
+
         if (!(sender instanceof Player)) {
             sender.sendMessage("This command can only be used by a player.");
             return true;

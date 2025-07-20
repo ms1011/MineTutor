@@ -9,3 +9,7 @@ commands:
     description: Ask a question to MineTutor.
     usage: /<command> <question>
     aliases: [ask, 가이드]
+permissions:
+  minetutor.admin:
+    description: Allows reloading the plugin's configuration.
+    default: op

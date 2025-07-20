@@ -21,4 +21,9 @@ public final class MineTutor extends JavaPlugin {
     public void onDisable() {
         getLogger().info("MineTutor has been disabled!");
     }
+
+    public void reload() {
+        reloadConfig();
+        getLogger().info("Configuration reloaded.");
+    }
 }
