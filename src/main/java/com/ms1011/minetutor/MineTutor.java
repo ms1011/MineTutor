@@ -11,9 +11,21 @@ public final class MineTutor extends JavaPlugin {
         // Save default config
         saveDefaultConfig();
 
-        String providerType = getConfig().getString("ai-provider", "openai");
-        if (providerType.equalsIgnoreCase("openai")) {
-            this.aiProvider = new OpenAIProvider(this);
+        String providerType = getConfig().getString("ai-provider", "openai").toLowerCase();
+        switch (providerType) {
+            case "openai":
+                this.aiProvider = new OpenAIProvider(this);
+                break;
+            case "claude":
+                this.aiProvider = new ClaudeProvider(this);
+                break;
+            case "gemini":
+                this.aiProvider = new GeminiProvider(this);
+                break;
+            default:
+                getLogger().warning("Invalid AI provider specified in config.yml. Defaulting to OpenAI.");
+                this.aiProvider = new OpenAIProvider(this);
+                break;
         }
 
         // Register command executor
@@ -28,9 +40,21 @@ public final class MineTutor extends JavaPlugin {
 
     public void reload() {
         reloadConfig();
-        String providerType = getConfig().getString("ai-provider", "openai");
-        if (providerType.equalsIgnoreCase("openai")) {
-            this.aiProvider = new OpenAIProvider(this);
+        String providerType = getConfig().getString("ai-provider", "openai").toLowerCase();
+        switch (providerType) {
+            case "openai":
+                this.aiProvider = new OpenAIProvider(this);
+                break;
+            case "claude":
+                this.aiProvider = new ClaudeProvider(this);
+                break;
+            case "gemini":
+                this.aiProvider = new GeminiProvider(this);
+                break;
+            default:
+                getLogger().warning("Invalid AI provider specified in config.yml. Defaulting to OpenAI.");
+                this.aiProvider = new OpenAIProvider(this);
+                break;
         }
         this.getCommand("guide").setExecutor(new GuideCommand(this, this.aiProvider));
         getLogger().info("Configuration reloaded.");
