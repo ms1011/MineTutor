@@ -9,15 +9,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class GuideCommand implements CommandExecutor {
 
+    private final MineTutor plugin;
     private final OpenAIHandler openAIHandler;
     private final Map<UUID, Long> cooldowns = new HashMap<>();
-    private final long cooldownSeconds = 30; // TODO: Make this configurable
 
-    public GuideCommand(OpenAIHandler openAIHandler) {
+    public GuideCommand(MineTutor plugin, OpenAIHandler openAIHandler) {
+        this.plugin = plugin;
         this.openAIHandler = openAIHandler;
     }
 
@@ -30,17 +30,20 @@ public class GuideCommand implements CommandExecutor {
 
         Player player = (Player) sender;
         UUID playerId = player.getUniqueId();
+        long cooldownSeconds = plugin.getConfig().getLong("command-cooldown", 30);
 
         if (cooldowns.containsKey(playerId)) {
             long secondsLeft = ((cooldowns.get(playerId) / 1000) + cooldownSeconds) - (System.currentTimeMillis() / 1000);
             if (secondsLeft > 0) {
-                player.sendMessage("§cYou must wait " + secondsLeft + " more seconds before using this command again.");
+                String cooldownMessage = plugin.getConfig().getString("messages.cooldown", "§cYou must wait {time} more seconds before using this command again.");
+                player.sendMessage(cooldownMessage.replace("{time}", String.valueOf(secondsLeft)));
                 return true;
             }
         }
 
         if (args.length == 0) {
-            sender.sendMessage("Usage: /guide <question>");
+            String usageMessage = plugin.getConfig().getString("messages.usage", "§cUsage: /guide <question>");
+            sender.sendMessage(usageMessage);
             return false;
         }
 

@@ -8,9 +8,12 @@ public final class MineTutor extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.openAIHandler = new OpenAIHandler();
+        // Save default config
+        saveDefaultConfig();
+
+        this.openAIHandler = new OpenAIHandler(this);
         // Register command executor
-        this.getCommand("guide").setExecutor(new GuideCommand(this.openAIHandler));
+        this.getCommand("guide").setExecutor(new GuideCommand(this, this.openAIHandler));
         getLogger().info("MineTutor has been enabled!");
     }
 
