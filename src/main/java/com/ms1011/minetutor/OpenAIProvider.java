@@ -9,17 +9,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-public class OpenAIHandler {
+public class OpenAIProvider implements AIProvider {
 
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private final MineTutor plugin;
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
 
-    public OpenAIHandler(MineTutor plugin) {
+    public OpenAIProvider(MineTutor plugin) {
         this.plugin = plugin;
     }
 
+    @Override
     public void askQuestion(Player player, String question) {
         String thinkingMessage = plugin.getConfig().getString("messages.thinking", "MineTutor is thinking...");
         player.sendMessage(thinkingMessage);

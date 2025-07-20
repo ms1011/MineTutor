@@ -4,16 +4,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MineTutor extends JavaPlugin {
 
-    private OpenAIHandler openAIHandler;
+    private AIProvider aiProvider;
 
     @Override
     public void onEnable() {
         // Save default config
         saveDefaultConfig();
 
-        this.openAIHandler = new OpenAIHandler(this);
+        String providerType = getConfig().getString("ai-provider", "openai");
+        if (providerType.equalsIgnoreCase("openai")) {
+            this.aiProvider = new OpenAIProvider(this);
+        }
+
         // Register command executor
-        this.getCommand("guide").setExecutor(new GuideCommand(this, this.openAIHandler));
+        this.getCommand("guide").setExecutor(new GuideCommand(this, this.aiProvider));
         getLogger().info("MineTutor has been enabled!");
     }
 
@@ -24,6 +28,11 @@ public final class MineTutor extends JavaPlugin {
 
     public void reload() {
         reloadConfig();
+        String providerType = getConfig().getString("ai-provider", "openai");
+        if (providerType.equalsIgnoreCase("openai")) {
+            this.aiProvider = new OpenAIProvider(this);
+        }
+        this.getCommand("guide").setExecutor(new GuideCommand(this, this.aiProvider));
         getLogger().info("Configuration reloaded.");
     }
 }

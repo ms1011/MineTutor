@@ -2,7 +2,8 @@
 
 # OpenAI API Key
 # Get your API key from https://beta.openai.com/account/api-keys
-api-key: "YOUR_OPENAI_API_KEY"
+ai-provider: openai
+api-key: YOUR_OPENAI_API_KEY
 
 # The system prompt helps set the behavior of the assistant.
 # You can modify this to change how MineTutor responds.

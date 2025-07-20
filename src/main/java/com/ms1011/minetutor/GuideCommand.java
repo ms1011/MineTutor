@@ -13,12 +13,11 @@ import java.util.UUID;
 public class GuideCommand implements CommandExecutor {
 
     private final MineTutor plugin;
-    private final OpenAIHandler openAIHandler;
-    private final Map<UUID, Long> cooldowns = new HashMap<>();
+    private final AIProvider aiProvider;
 
-    public GuideCommand(MineTutor plugin, OpenAIHandler openAIHandler) {
+    public GuideCommand(MineTutor plugin, AIProvider aiProvider) {
         this.plugin = plugin;
-        this.openAIHandler = openAIHandler;
+        this.aiProvider = aiProvider;
     }
 
     @Override
@@ -61,7 +60,7 @@ public class GuideCommand implements CommandExecutor {
         String question = String.join(" ", args);
 
         cooldowns.put(playerId, System.currentTimeMillis());
-        openAIHandler.askQuestion(player, question);
+        aiProvider.askQuestion(player, question);
 
         return true;
     }
