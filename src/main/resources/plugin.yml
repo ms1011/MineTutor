@@ -1,0 +1,10 @@
+name: MineTutor
+version: ${project.version}
+main: com.ms1011.minetutor.MineTutor
+api-version: 1.19
+author: ms1011
+description: Your In-Game Minecraft AI Expert
+commands:
+  guide:
+    description: Ask a question to MineTutor.
+    usage: /<command> <question>
